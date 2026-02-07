@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAZAM Barista - Menu</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="menu-style.css">
+    <!-- Firebase SDK (Compat Version for backward compatibility) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script>
+        console.log('Firebase scripts loading...');
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCnoVYQ_BgOSNeVuJPE0hF92beCrWhpoPE",
+            authDomain: "shazam-coffee.firebaseapp.com",
+            projectId: "shazam-coffee",
+            storageBucket: "shazam-coffee.firebasestorage.app",
+            messagingSenderId: "303645613348",
+            appId: "1:303645613348:web:fd463f95c4bb95d16fa7b1",
+            databaseURL: "https://shazam-coffee-default-rtdb.firebaseio.com"
+        };
+        
+        // Wait for Firebase to load
+        let initAttempts = 0;
+        const initFirebase = setInterval(() => {
+            if (typeof firebase !== 'undefined' && firebase.initializeApp) {
+                clearInterval(initFirebase);
+                try {
+                    if (!firebase.apps.length) {
+                        firebase.initializeApp(firebaseConfig);
+                    }
+                    window.firebaseDB = firebase.database();
+                    console.log('✅ Firebase initialized successfully');
+                } catch (error) {
+                    console.error('Firebase init error:', error);
+                    window.firebaseDB = null;
+                }
+            } else {
+                initAttempts++;
+                if (initAttempts > 100) {
+                    clearInterval(initFirebase);
+                    console.warn('⚠️ Firebase CDN not loaded. Using offline mode (localStorage). The app will still work fine!');
+                    window.firebaseDB = null;
+                }
+            }
+        }, 100);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="menu-header">
+            <div class="logo">
+                <div class="coffee-icon">☕</div>
+                <h1>SHAZAM Barista</h1>
+                <p class="tagline">USAFI Coffee Shop</p>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search menu...">
+            </div>
+        </header>
+
+        <main class="menu-content">
+            <div class="category-filter">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="espresso">Espresso</button>
+                <button class="filter-btn" data-category="black">Black Coffee</button>
+                <button class="filter-btn" data-category="iced">Iced</button>
+                <button class="filter-btn" data-category="tea">Tea</button>
+                <button class="filter-btn" data-category="milkshake">Milkshakes</button>
+                <button class="filter-btn" data-category="smoothie">Smoothies</button>
+                <button class="filter-btn" data-category="juice">Juices</button>
+                <button class="filter-btn" data-category="specialty">Manual Brewing</button>
+                <button class="filter-btn" data-category="Unique">Unique Coffee</button>
+            </div>
+
+            <!-- Espresso Based Coffee -->
+            <section class="menu-section" data-category="espresso">
+                <h2 class="section-title">☕ Espresso Based Coffee</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-image="affogato.jpeg">
+                         <span class="item-name">Affogato</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="african coffee.jpeg">
+                         <span class="item-name">African coffee</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="babayccino.jpeg">
+                         <span class="item-name">Babyccino</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="caffee_latte.jpeg">
+                         <span class="item-name">Caffè Latte</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Caffè_au_Lait.jpeg">
+                         <span class="item-name">Caffè au Lait</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="caffe_mocha.jpeg">
+                         <span class="item-name">Caffè Mocha</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="cappuccino.jpeg">
+                         <span class="item-name">Cappuccino</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Cortado.jpeg">
+                         <span class="item-name">Cortado</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Flat_White.jpeg">
+                         <span class="item-name">Flatwhite</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Picollo.jpeg">
+                         <span class="item-name">Piccolo</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Espresso_Tonic.jpeg">
+                         <span class="item-name">Espresso Tonic</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="espresso_romano.jpeg">
+                         <span class="item-name">Espresso Romano</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Espresso_Macchiato.jpeg">
+                         <span class="item-name">Espresso Macchiato</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Spanish_Latte.jpeg">
+                         <span class="item-name">Spanish Latte</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="calumera_latte.jpeg">
+                         <span class="item-name">Calumera Latte</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Frapuccini.jpeg">
+                         <span class="item-name">Frappuccino</span>
+                        <span class="item-price">3k</span>
+                    </div>
+                    <div class="menu-item" data-image="Raf_Latte.jpeg">
+                         <span class="item-name">Raf Latte</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Hot_Chocolate.jpeg">
+                         <span class="item-name">Hot Chocolate</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Black Coffee -->
+            <section class="menu-section" data-category="black">
+                <h2 class="section-title">☕ Black Coffee</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-image="Americano.jpeg">
+                         <span class="item-name">Americano</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Long_Black.jpeg">
+                         <span class="item-name">Long Black</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Red_Eye.jpeg">
+                         <span class="item-name">Red Eye</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Black_Eye.jpeg">
+                         <span class="item-name">Black Eye</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Iced Coffee -->
+            <section class="menu-section" data-category="iced">
+                <h2 class="section-title">🧊 Iced Coffee</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-image="Iced_Black_Eye.jpeg">
+                         <span class="item-name">Iced Black Eye</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Iced_Red_Eye.jpeg">
+                         <span class="item-name">Iced Red Eye</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Iced_Long_Black.jpeg">
+                         <span class="item-name">Iced Long Black</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Iced_Americano.jpeg">
+                         <span class="item-name">Iced Americano</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tea -->
+            <section class="menu-section" data-category="tea">
+                <h2 class="section-title">🍵 Tea</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-image="Black_Tea.jpeg">
+                         <span class="item-name">Black tea</span>
+                        <span class="item-price">1.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Green_Tea.jpeg">
+                         <span class="item-name">Green tea</span>
+                        <span class="item-price">1.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="African_Tea.jpeg">
+                         <span class="item-name">African tea</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="Spiced_Tea.jpeg">
+                         <span class="item-name">Spiced tea</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Milkshake -->
+            <section class="menu-section" data-category="milkshake">
+                <h2 class="section-title">🥤 Milkshake</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-image="Chocolate_Milkshake.jpeg">
+                         <span class="item-name">Chocolate milkshake</span>
+                        <span class="item-price">3.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Vanilla_Milkshake.jpeg">
+                         <span class="item-name">Vanilla milkshake</span>
+                        <span class="item-price">3.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Strawberry_Milkshake.jpeg">
+                         <span class="item-name">Strawberry milkshake</span>
+                        <span class="item-price">3.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Fruit_Milkshake.jpeg">
+                         <span class="item-name">Fruit milkshake</span>
+                        <span class="item-price">3.5k</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fruit Juice -->
+            <section class="menu-section" data-category="juice">
+                <h2 class="section-title">🍹 Fruit Juice</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-image="Mix_Juice.jpeg">
+                         <span class="item-name">Mix juice</span>
+                        <span class="item-price">3k</span>
+                    </div>
+                    <div class="menu-item" data-image="Tropical_Juice.jpeg">
+                         <span class="item-name">Tropical juice</span>
+                        <span class="item-price">3k</span>
+                    </div>
+                    <div class="menu-item" data-image="Exotic_Juice.jpeg">
+                         <span class="item-name">Exotic juice</span>
+                        <span class="item-price">3k</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Smoothie -->
+            <section class="menu-section" data-category="smoothie">
+                <h2 class="section-title">🥤 Smoothie</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-image="Banana_Mango_Smoothie.jpeg">
+                         <span class="item-name">Banana mango smoothie</span>
+                        <span class="item-price">3.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Avocado_Berry_Smoothie.jpeg">
+                         <span class="item-name">Avocado Mango smoothie</span>
+                        <span class="item-price">3.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="Banana_Yogurt_Smoothie.jpeg">
+                         <span class="item-name">Banana yoghurt smoothie</span>
+                        <span class="item-price">3.5k</span>
+                    </div> 
+                    <div class="menu-item" data-image="Choco_Peanut_Smoothie.jpeg">
+                         <span class="item-name">Choco Peanut Smoothie</span>
+                        <span class="item-price">3.5k</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Manual Brewing -->
+            <section class="menu-section" data-category="specialty">
+                <h2 class="section-title">☕ Manual Brewing</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-image="french_press.jpeg">
+                         <span class="item-name">French press</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="aero_press.jpeg">
+                         <span class="item-name">Aero-press</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="moka_pot.jpeg">
+                         <span class="item-name">Moka pot</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="cold_brew.jpeg">
+                         <span class="item-name">Cold brew</span>
+                        <span class="item-price">2k</span>
+                    </div> 
+                    <div class="menu-item" data-image="v60.jpeg">
+                         <span class="item-name">V60</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                    <div class="menu-item" data-image="chemex.jpeg">
+                         <span class="item-name">Chemex</span>
+                        <span class="item-price">2k</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unique Coffee -->
+            <section class="menu-section" data-category="Unique">
+                <h2 class="section-title">☕ Unique Coffee</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-image="egg_coffee.jpeg">
+                         <span class="item-name">Egg coffee</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="mango_coffee.jpeg">
+                         <span class="item-name">Mango coffee</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="avocado_coffee.jpeg">
+                         <span class="item-name">Avocado coffee</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="banana_coffee.jpeg">
+                         <span class="item-name">Babana coffee</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                    <div class="menu-item" data-image="frappe.jpeg">
+                         <span class="item-name">Frappe</span>
+                        <span class="item-price">2.5k</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="menu-footer">
+            <p class="contact">📞 +250 784 039 011</p>
+            <p class="powered">Powered by USAFI COFFEE Shop</p>
+            <p class="signature">
+                <a href="#" class="contact-link" onclick="toggleContactInfo(event)">Made by AJM digital solution</a>
+            </p>
+            <div id="contact-modal" class="contact-modal">
+                <div class="contact-content">
+                    <span class="close" onclick="toggleContactInfo()">&times;</span>
+                    <h3>AJM Digital Solution</h3>
+                    <p><strong>Location:</strong> Kigali, Rwanda</p>
+                    <p><strong>Phone Numbers:</strong></p>
+                    <ul>
+                        <li><a href="tel:+250783309973">+250783309973</a></li>
+                        <li><a href="tel:+250784039011">+250784039011</a></li>
+                    </ul>
+                    <p><strong>Email:</strong></p>
+                    <ul>
+                        <li><a href="mailto:ashimirwejoseph@gmail.com">ashimirwejoseph@gmail.com</a></li>
+                        <li><a href="mailto:niyonizeyezamshaban@gmail.com">niyonizeyezamshaban@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="barista-link-container">
+                <a href="barista.html" class="barista-link">
+                    🔐 Barista Dashboard
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Active Orders Section -->
+    <div class="active-orders-container" id="activeOrdersContainer">
+        <div class="active-orders-header">
+            <h3>🛒 Your Active Orders</h3>
+            <button class="close-orders-btn" id="closeOrdersBtn">✕</button>
+        </div>
+        <div id="activeOrdersList"></div>
+    </div>
+
+    <!-- Floating Orders Button -->
+    <button class="floating-orders-btn" id="floatingOrdersBtn">
+        <span class="order-count" id="orderCount">0</span>
+        🛍️
+    </button>
+
+    <!-- Customer Notifications Panel (Bottom Left) -->
+    <div id="customerNotificationsPanel" class="customer-notifications-panel">
+        <div class="notifications-header">
+            <h3>📢 Shop Updates</h3>
+            <button class="notifications-close-btn" onclick="toggleNotificationsPanel()">✕</button>
+        </div>
+        <div id="notificationsContent" class="notifications-content">
+            <!-- Notifications will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Place Your Order</h2>
+                <span class="close-modal" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="selected-item-display">
+                    <div class="item-info">
+                        <h3 id="selectedItemName"></h3>
+                        <p class="selected-price" id="selectedItemPrice"></p>
+                    </div>
+                    <div class="item-image-container">
+                        <img id="selectedItemImage" src="" alt="Product Image" class="selected-item-image">
+                    </div>
+                </div>
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label for="customerName">👤 Your Name *</label>
+                        <input type="text" id="customerName" required placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhone">📱 Phone Number *</label>
+                        <input type="tel" id="customerPhone" required placeholder="+250 XXX XXX XXX" pattern="[+0-9\s\-()]+">
+                    </div>
+                    <div class="form-group">
+                        <label for="pickupTime">⏰ Pickup Time (minutes) *</label>
+                        <select id="pickupTime" required>
+                            <option value="">Select pickup time</option>
+                            <option value="5">5 minutes</option>
+                            <option value="10">10 minutes</option>
+                            <option value="15">15 minutes</option>
+                            <option value="20">20 minutes</option>
+                            <option value="30">30 minutes</option>
+                            <option value="45">45 minutes</option>
+                            <option value="60">60 minutes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialInstructions">📝 Special Instructions (Optional)</label>
+                        <textarea id="specialInstructions" rows="3" placeholder="Any special requests?"></textarea>
+                    </div>
+                    <div class="pickup-info">
+                        <p>📍 <strong>Pickup Location:</strong> USAFI COFFEE Shop</p>
+                        <p>☎️ <strong>Contact:</strong> +250 784 039 011</p>
+                    </div>
+                    <button type="submit" class="submit-order-btn">✓ Confirm Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load menu script with a small delay to ensure Firebase initialization completes
+        setTimeout(() => {
+            const script = document.createElement('script');
+            script.src = 'menu-script.js';
+            document.body.appendChild(script);
+            console.log('Menu script loaded. Firebase DB status:', window.firebaseDB ? '✅ Ready' : '⚠️ Offline mode');
+        }, 500);
+    </script>
+</body>
+</html>

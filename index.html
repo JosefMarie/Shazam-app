@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAZAM Barista</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to Our Coffee Shop</h1>
+            <p>Scan the QR code to view our delicious menu!</p>
+        </header>
+        <main>
+            <div class="menu-container">
+                <a href="menu.html" class="menu-link">
+                    <button class="view-menu-btn">📖 View Our Interactive Menu</button>
+                </a>
+            </div>
+            <div class="qr-container">
+                <h2>Scan QR Code to Access Menu</h2>
+                <div id="qrcode">
+                    <img src="QRCode.png" alt="QR Code to access menu" class="qr-image">
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 Coffee Shop. All rights reserved.</p>
+            <p class="signature">
+                <a href="#" class="contact-link" onclick="toggleContactInfo(event)">Made by AJM digital solution</a>
+            </p>
+            <div id="contact-modal" class="contact-modal">
+                <div class="contact-content">
+                    <span class="close" onclick="toggleContactInfo()">&times;</span>
+                    <h3>AJM Digital Solution</h3>
+                    <p><strong>Location:</strong> Kigali, Rwanda</p>
+                    <p><strong>Phone Numbers:</strong></p>
+                    <ul>
+                        <li><a href="tel:+250783309973">+250783309973</a></li>
+                        <li><a href="tel:+250784039011">+250784039011</a></li>
+                    </ul>
+                    <p><strong>Email:</strong></p>
+                    <ul>
+                        <li><a href="mailto:ashimirwejoseph@gmail.com">ashimirwejoseph@gmail.com</a></li>
+                        <li><a href="mailto:niyonizeyezamshaban@gmail.com">niyonizeyezamshaban@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
